@@ -220,13 +220,16 @@ function Portfolio() {
               className="space-y-6 text-muted-foreground text-lg leading-relaxed"
             >
               <p>
-                Hello! My name is M. Kiran and I enjoy creating things that live on the internet. My interest in software development started back in college when I decided to try editing custom Python scripts — turns out hacking together small terminal apps taught me a lot about logic and data structures!
+                Hi, I'm M. Kiran a software developer passionate about building modern web applications and solving real-world problems through code.
               </p>
               <p>
-                Fast-forward to today, and I'm a CS graduate with a B.E. from Government Engineering College, K R Pet. I've had the privilege of working on full-stack projects that bridge complex backend architectures with modern frontend interfaces.
+                My interest in technology started with curiosity about how websites and applications work behind the scenes. Over time, that curiosity grew into a strong passion for building responsive, scalable, and efficient digital experiences.
               </p>
               <p>
-                My main focus these days is building scalable backend APIs, optimizing database queries, and exploring AI integration within web applications.
+                I enjoy turning ideas into real-world projects and solving complex problems through clean and practical solutions. From designing smooth user interfaces to developing robust backend systems, I love working across different parts of the development process.
+              </p>
+              <p>
+                Currently, I'm focused on improving my skills in full-stack development, backend architecture, databases, and modern web technologies while continuously learning and exploring new innovations in tech.
               </p>
               <div className="flex items-center gap-2 text-primary font-mono text-sm mt-4">
                 <MapPin className="w-4 h-4" />
