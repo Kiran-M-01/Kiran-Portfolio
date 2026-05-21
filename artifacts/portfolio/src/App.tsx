@@ -16,7 +16,10 @@ import {
   Terminal, 
   Wrench,
   GraduationCap,
-  Briefcase
+  Briefcase,
+  Sun,
+  Moon,
+  Send
 } from "lucide-react";
 import { 
   SiPython, 
@@ -67,7 +70,6 @@ const Section = ({ id, title, children }: { id: string, title?: string, children
           viewport={{ once: true, margin: "-100px" }}
           className="text-3xl md:text-4xl font-bold mb-12 flex items-center gap-4 text-foreground"
         >
-          <span className="text-primary font-mono text-xl md:text-2xl">0{['about', 'skills', 'experience', 'projects', 'education', 'contact'].indexOf(id) + 1}.</span>
           {title}
           <div className="h-[1px] bg-border flex-1 ml-4" />
         </motion.h2>
@@ -86,6 +88,38 @@ function Portfolio() {
   });
 
   const typedTitle = useTypingEffect("Python Developer", 100);
+
+  const [theme, setTheme] = useState<"dark" | "light">(() => {
+    if (typeof window !== "undefined") {
+      return (localStorage.getItem("theme") as "dark" | "light") || "dark";
+    }
+    return "dark";
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => setTheme(t => t === "dark" ? "light" : "dark");
+
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [formSent, setFormSent] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const { name, email, message } = formData;
+    const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+    window.location.href = `mailto:mkiranmkiran306@gmail.com?subject=${subject}&body=${body}`;
+    setFormSent(true);
+    setTimeout(() => setFormSent(false), 3000);
+  };
 
   return (
     <div className="bg-background text-foreground min-h-screen font-sans selection:bg-primary selection:text-primary-foreground relative">
@@ -107,15 +141,23 @@ function Portfolio() {
             <span className="text-muted-foreground group-hover:text-foreground transition-colors">/&gt;</span>
           </a>
           <div className="hidden md:flex items-center gap-8 font-mono text-sm">
-            {['About', 'Skills', 'Experience', 'Projects', 'Contact'].map((item, i) => (
+            {['About', 'Skills', 'Experience', 'Projects', 'Contact'].map((item) => (
               <a 
                 key={item} 
                 href={`#${item.toLowerCase()}`}
-                className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
+                className="text-muted-foreground hover:text-primary transition-colors"
               >
-                <span className="text-primary/70">0{i+1}.</span> {item}
+                {item}
               </a>
             ))}
+            <button
+              onClick={toggleTheme}
+              data-testid="button-theme-toggle"
+              className="p-2 rounded-md border border-border text-muted-foreground hover:text-primary hover:border-primary transition-colors"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
             <a 
               href="#contact" 
               className="px-4 py-2 border border-primary/50 text-primary rounded hover:bg-primary/10 transition-colors"
@@ -448,39 +490,101 @@ function Portfolio() {
         </Section>
 
         {/* Contact Section */}
-        <Section id="contact">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-2xl mx-auto text-center"
-          >
-            <p className="font-mono text-primary mb-4">06. What's Next?</p>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">Get In Touch</h2>
-            <p className="text-muted-foreground text-lg mb-10 leading-relaxed">
-              I'm currently looking for new opportunities in full-stack and backend development. 
-              Whether you have a question, a project idea, or just want to say hi, my inbox is always open.
-            </p>
-            <a 
-              href="mailto:mkiranmkiran306@gmail.com"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-transparent border border-primary text-primary hover:bg-primary/10 rounded-md font-mono text-lg transition-colors group"
+        <Section id="contact" title="Get In Touch">
+          <div className="max-w-3xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
             >
-              <Mail className="w-5 h-5 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
-              Say Hello
-            </a>
-            
-            <div className="mt-20 pt-8 border-t border-border flex flex-col items-center gap-6 text-muted-foreground font-mono text-sm">
+              <p className="text-muted-foreground text-lg leading-relaxed max-w-xl mx-auto">
+                I'm open to new opportunities, collaborations, and interesting conversations. 
+                Whether you have a project in mind, a question, or just want to connect — fill out the form below and I'll get back to you soon.
+              </p>
+            </motion.div>
+
+            <motion.form
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              onSubmit={handleSubmit}
+              className="bg-card border border-border rounded-xl p-8 space-y-6"
+              data-testid="form-contact"
+            >
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground" htmlFor="contact-name">Name</label>
+                  <input
+                    id="contact-name"
+                    data-testid="input-name"
+                    type="text"
+                    placeholder="Your name"
+                    value={formData.name}
+                    onChange={e => setFormData(d => ({ ...d, name: e.target.value }))}
+                    required
+                    className="w-full px-4 py-3 rounded-md bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground" htmlFor="contact-email">Email</label>
+                  <input
+                    id="contact-email"
+                    data-testid="input-email"
+                    type="email"
+                    placeholder="your.email@example.com"
+                    value={formData.email}
+                    onChange={e => setFormData(d => ({ ...d, email: e.target.value }))}
+                    required
+                    className="w-full px-4 py-3 rounded-md bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground" htmlFor="contact-message">Message</label>
+                <textarea
+                  id="contact-message"
+                  data-testid="input-message"
+                  placeholder="Your message..."
+                  value={formData.message}
+                  onChange={e => setFormData(d => ({ ...d, message: e.target.value }))}
+                  required
+                  rows={5}
+                  className="w-full px-4 py-3 rounded-md bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors resize-none"
+                />
+              </div>
+              <button
+                type="submit"
+                data-testid="button-send-message"
+                className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 bg-primary text-primary-foreground font-medium rounded-md hover:bg-primary/90 transition-all hover:shadow-[0_0_20px_rgba(0,183,255,0.3)] active:scale-95"
+              >
+                <Send className="w-4 h-4" />
+                {formSent ? "Opening mail client..." : "Send Message"}
+              </button>
+            </motion.form>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="mt-12 pt-8 border-t border-border flex flex-col items-center gap-6 text-muted-foreground font-mono text-sm"
+            >
               <div className="flex gap-6">
-                <a href="https://linkedin.com/in/m-kiran-972425330" className="hover:text-primary transition-colors flex items-center gap-2">
+                <a href="https://linkedin.com/in/m-kiran-972425330" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors flex items-center gap-2">
                   <Linkedin className="w-4 h-4" /> LinkedIn
+                </a>
+                <a href="mailto:mkiranmkiran306@gmail.com" className="hover:text-primary transition-colors flex items-center gap-2">
+                  <Mail className="w-4 h-4" /> mkiranmkiran306@gmail.com
                 </a>
                 <a href="tel:+919113082286" className="hover:text-primary transition-colors flex items-center gap-2">
                   <Phone className="w-4 h-4" /> +91 9113082286
                 </a>
               </div>
               <p>Designed & Built by M. Kiran</p>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </Section>
       </main>
     </div>
