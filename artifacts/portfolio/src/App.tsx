@@ -36,7 +36,8 @@ import {
   SiVitedotjs, 
   SiNodedotjs, 
   SiExpress, 
-  SiMongodb
+  SiMongodb,
+  SiVercel
 } from "react-icons/si";
 
 const queryClient = new QueryClient();
@@ -267,7 +268,8 @@ function Portfolio() {
                   { name: "Java (Basics)", icon: null },
                   { name: "C/C++", icon: <SiCplusplus /> },
                   { name: "JavaScript", icon: <SiJavascript /> },
-                  { name: "HTML/CSS", icon: <SiHtml5 /> }
+                  { name: "HTML/CSS", icon: <SiHtml5 /> },
+                  { name: "SQL", icon: <Database className="w-4 h-4" /> }
                 ]
               },
               {
@@ -275,29 +277,23 @@ function Portfolio() {
                 icon: <Terminal className="w-6 h-6 text-primary" />,
                 skills: [
                   { name: "Flask", icon: <SiFlask /> },
-                  { name: "React.js", icon: <SiReact /> },
-                  { name: "Node.js", icon: <SiNodedotjs /> },
-                  { name: "Express.js", icon: <SiExpress /> }
+                  { name: "React.js", icon: <SiReact /> }
                 ]
               },
               {
                 title: "Databases",
                 icon: <Database className="w-6 h-6 text-primary" />,
                 skills: [
-                  { name: "MySQL", icon: <SiMysql /> },
-                  { name: "Oracle SQL", icon: <Database className="w-4 h-4" /> },
-                  { name: "MongoDB", icon: <SiMongodb /> }
+                  { name: "MySQL", icon: <SiMysql /> }
                 ]
               },
               {
-                title: "Tools & Concepts",
+                title: "Tools",
                 icon: <Wrench className="w-6 h-6 text-primary" />,
                 skills: [
                   { name: "Git & GitHub", icon: <SiGithub /> },
                   { name: "VS Code", icon: null },
-                  { name: "Data Structures", icon: null },
-                  { name: "Algorithms", icon: null },
-                  { name: "OOP", icon: null }
+                  { name: "Vercel", icon: <SiVercel /> }
                 ]
               }
             ].map((category, i) => (
