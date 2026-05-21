@@ -20,7 +20,9 @@ import {
   Briefcase,
   Sun,
   Moon,
-  Send
+  Send,
+  Menu,
+  X
 } from "lucide-react";
 import { 
   SiPython, 
@@ -111,6 +113,9 @@ function Portfolio() {
 
   const toggleTheme = () => setTheme(t => t === "dark" ? "light" : "dark");
 
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navItems = ['About', 'Skills', 'Experience', 'Projects', 'Contact'];
+
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [formSent, setFormSent] = useState(false);
 
@@ -143,10 +148,12 @@ function Portfolio() {
             M.Kiran
             <span className="text-muted-foreground group-hover:text-foreground transition-colors">/&gt;</span>
           </a>
+
+          {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-8 font-mono text-sm">
-            {['About', 'Skills', 'Experience', 'Projects', 'Contact'].map((item) => (
-              <a 
-                key={item} 
+            {navItems.map((item) => (
+              <a
+                key={item}
                 href={`#${item.toLowerCase()}`}
                 className="text-muted-foreground hover:text-primary transition-colors"
               >
@@ -161,14 +168,61 @@ function Portfolio() {
             >
               {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
-            <a 
-              href="#contact" 
+            <a
+              href="#contact"
               className="px-4 py-2 border border-primary/50 text-primary rounded hover:bg-primary/10 transition-colors"
             >
               Hire Me
             </a>
           </div>
+
+          {/* Mobile right side */}
+          <div className="flex md:hidden items-center gap-3">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-md border border-border text-muted-foreground hover:text-primary hover:border-primary transition-colors"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
+            <button
+              onClick={() => setMenuOpen(o => !o)}
+              data-testid="button-hamburger"
+              className="p-2 rounded-md border border-border text-muted-foreground hover:text-primary hover:border-primary transition-colors"
+              aria-label="Toggle menu"
+            >
+              {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile drawer */}
+        <motion.div
+          initial={false}
+          animate={menuOpen ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
+          transition={{ duration: 0.25, ease: "easeInOut" }}
+          className="md:hidden overflow-hidden border-t border-border/50 bg-background/95 backdrop-blur-md"
+        >
+          <div className="flex flex-col px-6 py-4 gap-1 font-mono text-sm">
+            {navItems.map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                onClick={() => setMenuOpen(false)}
+                className="py-3 px-2 text-muted-foreground hover:text-primary border-b border-border/30 last:border-0 transition-colors"
+              >
+                {item}
+              </a>
+            ))}
+            <a
+              href="#contact"
+              onClick={() => setMenuOpen(false)}
+              className="mt-3 py-3 px-4 text-center border border-primary/50 text-primary rounded hover:bg-primary/10 transition-colors"
+            >
+              Hire Me
+            </a>
+          </div>
+        </motion.div>
       </nav>
 
       <main className="relative z-10">
