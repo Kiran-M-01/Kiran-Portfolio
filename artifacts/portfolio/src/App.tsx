@@ -49,8 +49,9 @@ function useTypingEffect(text: string, speed = 100) {
     let i = 0;
     const timer = setInterval(() => {
       if (i < text.length) {
-        setDisplayText((prev) => prev + text.charAt(i));
+        const char = text.charAt(i);
         i++;
+        setDisplayText((prev) => prev + char);
       } else {
         clearInterval(timer);
       }
