@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import profileImage from "@assets/wavegenerics-anonymous-7722244_1779370818970.png";
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -228,7 +229,7 @@ function Portfolio() {
               </p>
               <div className="flex items-center gap-2 text-primary font-mono text-sm mt-4">
                 <MapPin className="w-4 h-4" />
-                <span>Vijayanagar, India</span>
+                <span>India</span>
               </div>
             </motion.div>
             <motion.div 
@@ -239,10 +240,12 @@ function Portfolio() {
             >
               <div className="absolute inset-0 border-2 border-primary rounded-lg translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-300" />
               <div className="absolute inset-0 bg-card rounded-lg overflow-hidden border border-border z-10">
-                <div className="w-full h-full bg-secondary flex items-center justify-center text-muted-foreground font-mono text-6xl">
-                  M.K
-                </div>
-                <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors duration-300 mix-blend-multiply" />
+                <img
+                  src={profileImage}
+                  alt="M. Kiran"
+                  className="w-full h-full object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors duration-300" />
               </div>
             </motion.div>
           </div>
@@ -381,7 +384,7 @@ function Portfolio() {
                   <div className="absolute inset-0 bg-secondary/80 flex items-center justify-center p-8">
                     <div className="w-full h-full border border-primary/20 rounded flex flex-col items-center justify-center gap-4 bg-background/50 backdrop-blur-sm relative overflow-hidden">
                        <div className="absolute inset-0 grid-bg opacity-20" />
-                       <SiNodedotjs className="w-16 h-16 text-primary/50" />
+                       <SiMongodb className="w-16 h-16 text-primary/50" />
                        <span className="font-mono text-primary/70 tracking-widest uppercase">STEGOHIDE SYSTEM</span>
                     </div>
                   </div>
