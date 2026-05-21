@@ -385,7 +385,7 @@ function Portfolio() {
                     <div className="w-full h-full border border-primary/20 rounded flex flex-col items-center justify-center gap-4 bg-background/50 backdrop-blur-sm relative overflow-hidden">
                        <div className="absolute inset-0 grid-bg opacity-20" />
                        <SiNodedotjs className="w-16 h-16 text-primary/50" />
-                       <span className="font-mono text-primary/70 tracking-widest uppercase">NODE.JS PROJECT</span>
+                       <span className="font-mono text-primary/70 tracking-widest uppercase">StegoHide</span>
                     </div>
                   </div>
                   <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors duration-500" />
